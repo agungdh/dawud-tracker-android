@@ -36,6 +36,9 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
+            ndk {
+                abiFilters += listOf("arm64-v8a")
+            }
             optimization {
                 enable = false
             }
