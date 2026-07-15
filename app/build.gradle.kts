@@ -17,7 +17,6 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "0.0.1"
-        resourceConfigurations += listOf("en", "id")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,6 +45,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    androidResources {
+        localeFilters += listOf("en", "id")
+    }
     buildFeatures {
         compose = true
     }
@@ -66,7 +68,6 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
