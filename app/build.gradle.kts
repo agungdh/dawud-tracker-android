@@ -25,7 +25,7 @@ android {
         create("release") {
             storeFile = file(
                 System.getenv("KEYSTORE_FILE")
-                    ?: "${System.getProperty("user.home")}/.android/debug.keystore"
+                    ?: rootProject.file("debug.keystore")
             )
             storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "android"
             keyAlias = System.getenv("KEY_ALIAS") ?: "androiddebugkey"
