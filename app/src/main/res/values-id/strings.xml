@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Dawud Tracker</string>
+
+    <string name="stat_total">Total</string>
+    <string name="stat_monthly">Bulan Ini</string>
+    <string name="stat_streak">Streak</string>
+    <string name="stat_streak_fmt">%d hari</string>
+
+    <string name="day_sun">Min</string>
+    <string name="day_mon">Sen</string>
+    <string name="day_tue">Sel</string>
+    <string name="day_wed">Rab</string>
+    <string name="day_thu">Kam</string>
+    <string name="day_fri">Jum</string>
+    <string name="day_sat">Sab</string>
+
+    <string name="btn_prev_month">Bulan sebelumnya</string>
+    <string name="btn_next_month">Bulan berikutnya</string>
+
+    <string name="legend_fasted">Puasa</string>
+    <string name="legend_not_fasted">Tidak</string>
+    <string name="legend_unmarked">Belum</string>
+
+    <string name="btn_fasted_today">Hari ini Puasa</string>
+    <string name="btn_not_fasted_today">Tidak Puasa</string>
+
+    <string name="title_profile">Profil</string>
+    <string name="label_name">Nama</string>
+    <string name="label_reason">Alasan / Motivasi Puasa Daud</string>
+    <string name="label_start_date">Tanggal Mulai Puasa Daud</string>
+    <string name="btn_pick_date">Pilih tanggal</string>
+    <string name="btn_save">Simpan</string>
+    <string name="msg_profile_saved">Profil berhasil disimpan!</string>
+
+    <string name="title_settings">Pengaturan</string>
+    <string name="label_notification">Notifikasi Pengingat</string>
+    <string name="label_notif_time">Waktu Notifikasi</string>
+    <string name="btn_pick_time">Pilih waktu</string>
+    <string name="desc_notif_time">Notifikasi akan muncul setiap hari pada jam ini</string>
+    <string name="btn_save_settings">Simpan Pengaturan</string>
+    <string name="msg_settings_saved">Pengaturan berhasil disimpan!</string>
+
+    <string name="nav_home">Beranda</string>
+    <string name="nav_profile">Profil</string>
+    <string name="nav_settings">Pengaturan</string>
+
+    <string name="channel_name">Pengingat Puasa</string>
+    <string name="channel_desc">Pengingat harian untuk puasa Daud</string>
+    <string name="notif_title">Pengingat Puasa Daud</string>
+    <string name="notif_body">Sudahkah kamu mencatat puasa hari ini?</string>
+</resources>

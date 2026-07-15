@@ -1,5 +1,6 @@
 package id.my.agungdh.dawudtracker.ui.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -14,20 +15,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import id.my.agungdh.dawudtracker.R
 import id.my.agungdh.dawudtracker.ui.screen.home.HomeScreen
 import id.my.agungdh.dawudtracker.ui.screen.profile.ProfileScreen
 import id.my.agungdh.dawudtracker.ui.screen.settings.SettingsScreen
 
-sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
-    data object Home : Screen("home", "Beranda", Icons.Default.Home)
-    data object Profile : Screen("profile", "Profil", Icons.Default.Person)
-    data object Settings : Screen("settings", "Pengaturan", Icons.Default.Settings)
+sealed class Screen(
+    val route: String,
+    @param:StringRes val labelRes: Int,
+    val icon: ImageVector
+) {
+    data object Home : Screen("home", R.string.nav_home, Icons.Default.Home)
+    data object Profile : Screen("profile", R.string.nav_profile, Icons.Default.Person)
+    data object Settings : Screen("settings", R.string.nav_settings, Icons.Default.Settings)
 }
 
 val bottomNavItems = listOf(Screen.Home, Screen.Profile, Screen.Settings)
@@ -43,8 +50,8 @@ fun AppNavigation() {
             NavigationBar {
                 bottomNavItems.forEach { screen ->
                     NavigationBarItem(
-                        icon = { Icon(screen.icon, contentDescription = screen.label) },
-                        label = { Text(screen.label) },
+                        icon = { Icon(screen.icon, contentDescription = stringResource(screen.labelRes)) },
+                        label = { Text(stringResource(screen.labelRes)) },
                         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                         onClick = {
                             navController.navigate(screen.route) {

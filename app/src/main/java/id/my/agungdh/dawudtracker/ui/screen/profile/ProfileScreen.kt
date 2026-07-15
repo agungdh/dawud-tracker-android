@@ -23,8 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import id.my.agungdh.dawudtracker.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -41,7 +43,7 @@ fun ProfileScreen(
     val saved by viewModel.saved.collectAsState()
 
     val context = LocalContext.current
-    val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"))
+    val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
     dateFormat.timeZone = TimeZone.getTimeZone("UTC")
 
     Scaffold { padding ->
@@ -53,7 +55,7 @@ fun ProfileScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = "Profil",
+                text = stringResource(R.string.title_profile),
                 style = MaterialTheme.typography.headlineMedium
             )
 
@@ -62,7 +64,7 @@ fun ProfileScreen(
             OutlinedTextField(
                 value = name,
                 onValueChange = { viewModel.updateName(it) },
-                label = { Text("Nama") },
+                label = { Text(stringResource(R.string.label_name)) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -72,7 +74,7 @@ fun ProfileScreen(
             OutlinedTextField(
                 value = reason,
                 onValueChange = { viewModel.updateReason(it) },
-                label = { Text("Alasan / Motivasi Puasa Daud") },
+                label = { Text(stringResource(R.string.label_reason)) },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3
             )
@@ -83,7 +85,7 @@ fun ProfileScreen(
                 value = if (startDate != null) dateFormat.format(Date(startDate!!)) else "",
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Tanggal Mulai Puasa Daud") },
+                label = { Text(stringResource(R.string.label_start_date)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
@@ -111,7 +113,10 @@ fun ProfileScreen(
                         ).show()
                     },
                 trailingIcon = {
-                    Icon(Icons.Default.CalendarToday, contentDescription = "Pilih tanggal")
+                    Icon(
+                        Icons.Default.CalendarToday,
+                        contentDescription = stringResource(R.string.btn_pick_date)
+                    )
                 }
             )
 
@@ -121,13 +126,13 @@ fun ProfileScreen(
                 onClick = { viewModel.save() },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Simpan")
+                Text(stringResource(R.string.btn_save))
             }
 
             if (saved) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Profil berhasil disimpan!",
+                    text = stringResource(R.string.msg_profile_saved),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyMedium
                 )

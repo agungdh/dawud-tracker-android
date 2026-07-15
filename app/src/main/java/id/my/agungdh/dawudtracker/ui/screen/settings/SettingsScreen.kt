@@ -21,8 +21,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import id.my.agungdh.dawudtracker.R
 
 @Composable
 fun SettingsScreen(
@@ -44,14 +46,14 @@ fun SettingsScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Pengaturan",
+                text = stringResource(R.string.title_settings),
                 style = MaterialTheme.typography.headlineMedium
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Notifikasi Pengingat",
+                text = stringResource(R.string.label_notification),
                 style = MaterialTheme.typography.titleMedium
             )
 
@@ -61,7 +63,7 @@ fun SettingsScreen(
                 value = timeText,
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Waktu Notifikasi") },
+                label = { Text(stringResource(R.string.label_notif_time)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
@@ -77,10 +79,13 @@ fun SettingsScreen(
                         ).show()
                     },
                 trailingIcon = {
-                    Icon(Icons.Default.AccessTime, contentDescription = "Pilih waktu")
+                    Icon(
+                        Icons.Default.AccessTime,
+                        contentDescription = stringResource(R.string.btn_pick_time)
+                    )
                 },
                 supportingText = {
-                    Text("Notifikasi akan muncul setiap hari pada jam ini")
+                    Text(stringResource(R.string.desc_notif_time))
                 }
             )
 
@@ -90,13 +95,13 @@ fun SettingsScreen(
                 onClick = { viewModel.save(context) },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Simpan Pengaturan")
+                Text(stringResource(R.string.btn_save_settings))
             }
 
             if (saved) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Pengaturan berhasil disimpan!",
+                    text = stringResource(R.string.msg_settings_saved),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyMedium
                 )

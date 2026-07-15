@@ -42,11 +42,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import id.my.agungdh.dawudtracker.R
 import id.my.agungdh.dawudtracker.data.entity.FastingStatus
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -65,10 +66,13 @@ fun HomeScreen(
     val longestStreak by viewModel.longestStreak.collectAsState(0)
     val notificationTime by viewModel.notificationTime.collectAsState()
 
-    val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.forLanguageTag("id-ID"))
+    val monthFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
     monthFormat.timeZone = TimeZone.getTimeZone("UTC")
 
-    val dayHeaders = listOf("Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab")
+    val dayHeaders = listOf(
+        R.string.day_sun, R.string.day_mon, R.string.day_tue,
+        R.string.day_wed, R.string.day_thu, R.string.day_fri, R.string.day_sat
+    )
 
     Scaffold { padding ->
         Column(
@@ -77,7 +81,6 @@ fun HomeScreen(
                 .padding(padding)
                 .padding(horizontal = 16.dp)
         ) {
-            // Stats cards
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -85,32 +88,34 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 StatCard(
-                    label = "Total",
+                    label = stringResource(R.string.stat_total),
                     value = totalFasted.toString(),
                     modifier = Modifier.weight(1f)
                 )
                 StatCard(
-                    label = "Bulan Ini",
+                    label = stringResource(R.string.stat_monthly),
                     value = monthlyFasted.toString(),
                     modifier = Modifier.weight(1f)
                 )
                 StatCard(
-                    label = "Streak",
-                    value = "$longestStreak hari",
+                    label = stringResource(R.string.stat_streak),
+                    value = stringResource(R.string.stat_streak_fmt, longestStreak),
                     modifier = Modifier.weight(1f)
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Month navigation
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 IconButton(onClick = { viewModel.navigateMonth(false) }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Bulan sebelumnya")
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.btn_prev_month)
+                    )
                 }
                 Text(
                     text = monthFormat.format(currentMonth.time),
@@ -118,17 +123,19 @@ fun HomeScreen(
                     fontWeight = FontWeight.Bold
                 )
                 IconButton(onClick = { viewModel.navigateMonth(true) }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Bulan berikutnya")
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = stringResource(R.string.btn_next_month)
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Day headers
             Row(modifier = Modifier.fillMaxWidth()) {
-                dayHeaders.forEach { day ->
+                dayHeaders.forEach { dayRes ->
                     Text(
-                        text = day,
+                        text = stringResource(dayRes),
                         modifier = Modifier.weight(1f),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.labelSmall,
@@ -139,7 +146,6 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            // Calendar grid
             LazyVerticalGrid(
                 columns = GridCells.Fixed(7),
                 modifier = Modifier.weight(1f),
@@ -208,22 +214,29 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Legend
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                LegendItem(color = Color(0xFF4CAF50), label = "Puasa")
+                LegendItem(
+                    color = Color(0xFF4CAF50),
+                    label = stringResource(R.string.legend_fasted)
+                )
                 Spacer(modifier = Modifier.width(16.dp))
-                LegendItem(color = Color(0xFFF44336), label = "Tidak")
+                LegendItem(
+                    color = Color(0xFFF44336),
+                    label = stringResource(R.string.legend_not_fasted)
+                )
                 Spacer(modifier = Modifier.width(16.dp))
-                LegendItem(color = Color.Transparent, label = "Belum")
+                LegendItem(
+                    color = Color.Transparent,
+                    label = stringResource(R.string.legend_unmarked)
+                )
             }
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Mark today buttons
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -239,7 +252,7 @@ fun HomeScreen(
                 ) {
                     Icon(Icons.Default.Check, contentDescription = null)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Hari ini Puasa")
+                    Text(stringResource(R.string.btn_fasted_today))
                 }
                 Button(
                     onClick = { viewModel.markToday(FastingStatus.NOT_FASTED) },
@@ -250,7 +263,7 @@ fun HomeScreen(
                 ) {
                     Icon(Icons.Default.Close, contentDescription = null)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Tidak Puasa")
+                    Text(stringResource(R.string.btn_not_fasted_today))
                 }
             }
         }

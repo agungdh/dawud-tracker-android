@@ -11,6 +11,10 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import id.my.agungdh.dawudtracker.R
+import id.my.agungdh.dawudtracker.data.database.AppDatabase
+import id.my.agungdh.dawudtracker.data.repository.SettingsRepository
+import kotlinx.coroutines.runBlocking
 import java.util.Calendar
 
 class FastingReminderReceiver : BroadcastReceiver() {
@@ -23,20 +27,6 @@ class FastingReminderReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun rescheduleAfterBoot(context: Context) {
-        val db = id.my.agungdh.dawudtracker.data.database.AppDatabase.getInstance(context)
-        val repo = id.my.agungdh.dawudtracker.data.repository.SettingsRepository(db.appSettingDao())
-        kotlinx.coroutines.runBlocking {
-            val hour = repo.getSettingOnce(
-                id.my.agungdh.dawudtracker.data.repository.SettingsRepository.Companion.KEY_NOTIFICATION_HOUR
-            )?.value?.toIntOrNull() ?: id.my.agungdh.dawudtracker.data.repository.SettingsRepository.Companion.DEFAULT_NOTIFICATION_HOUR
-            val minute = repo.getSettingOnce(
-                id.my.agungdh.dawudtracker.data.repository.SettingsRepository.Companion.KEY_NOTIFICATION_MINUTE
-            )?.value?.toIntOrNull() ?: id.my.agungdh.dawudtracker.data.repository.SettingsRepository.Companion.DEFAULT_NOTIFICATION_MINUTE
-            scheduleReminder(context, hour, minute)
-        }
-    }
-
     companion object {
         private const val CHANNEL_ID = "fasting_reminder"
         private const val NOTIFICATION_ID = 1
@@ -46,10 +36,10 @@ class FastingReminderReceiver : BroadcastReceiver() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channel = android.app.NotificationChannel(
                     CHANNEL_ID,
-                    "Pengingat Puasa",
+                    context.getString(R.string.channel_name),
                     android.app.NotificationManager.IMPORTANCE_DEFAULT
                 ).apply {
-                    description = "Pengingat harian untuk puasa Daud"
+                    description = context.getString(R.string.channel_desc)
                 }
                 val manager = context.getSystemService(android.app.NotificationManager::class.java)
                 manager.createNotificationChannel(channel)
@@ -106,13 +96,27 @@ class FastingReminderReceiver : BroadcastReceiver() {
 
             val notification = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("Pengingat Puasa Daud")
-                .setContentText("Sudahkah kamu mencatat puasa hari ini?")
+                .setContentTitle(context.getString(R.string.notif_title))
+                .setContentText(context.getString(R.string.notif_body))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .build()
 
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+        }
+    }
+
+    private fun rescheduleAfterBoot(context: Context) {
+        val db = AppDatabase.getInstance(context)
+        val repo = SettingsRepository(db.appSettingDao())
+        runBlocking {
+            val hour = repo.getSettingOnce(
+                SettingsRepository.KEY_NOTIFICATION_HOUR
+            )?.value?.toIntOrNull() ?: SettingsRepository.DEFAULT_NOTIFICATION_HOUR
+            val minute = repo.getSettingOnce(
+                SettingsRepository.KEY_NOTIFICATION_MINUTE
+            )?.value?.toIntOrNull() ?: SettingsRepository.DEFAULT_NOTIFICATION_MINUTE
+            scheduleReminder(context, hour, minute)
         }
     }
 }

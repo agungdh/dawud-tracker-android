@@ -1,3 +1,51 @@
 <resources>
     <string name="app_name">Dawud Tracker</string>
+
+    <string name="stat_total">Total</string>
+    <string name="stat_monthly">This Month</string>
+    <string name="stat_streak">Streak</string>
+    <string name="stat_streak_fmt">%d days</string>
+
+    <string name="day_sun">Sun</string>
+    <string name="day_mon">Mon</string>
+    <string name="day_tue">Tue</string>
+    <string name="day_wed">Wed</string>
+    <string name="day_thu">Thu</string>
+    <string name="day_fri">Fri</string>
+    <string name="day_sat">Sat</string>
+
+    <string name="btn_prev_month">Previous month</string>
+    <string name="btn_next_month">Next month</string>
+
+    <string name="legend_fasted">Fasted</string>
+    <string name="legend_not_fasted">Not Fasted</string>
+    <string name="legend_unmarked">Unmarked</string>
+
+    <string name="btn_fasted_today">Fasted Today</string>
+    <string name="btn_not_fasted_today">Not Fasted Today</string>
+
+    <string name="title_profile">Profile</string>
+    <string name="label_name">Name</string>
+    <string name="label_reason">Reason / Motivation</string>
+    <string name="label_start_date">Start Date</string>
+    <string name="btn_pick_date">Pick date</string>
+    <string name="btn_save">Save</string>
+    <string name="msg_profile_saved">Profile saved!</string>
+
+    <string name="title_settings">Settings</string>
+    <string name="label_notification">Notification Reminder</string>
+    <string name="label_notif_time">Notification Time</string>
+    <string name="btn_pick_time">Pick time</string>
+    <string name="desc_notif_time">Notification will appear every day at this time</string>
+    <string name="btn_save_settings">Save Settings</string>
+    <string name="msg_settings_saved">Settings saved!</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="channel_name">Fasting Reminder</string>
+    <string name="channel_desc">Daily reminder for Dawud fasting</string>
+    <string name="notif_title">Dawud Fasting Reminder</string>
+    <string name="notif_body">Have you logged your fast today?</string>
 </resources>
