@@ -13,6 +13,7 @@ android {
     defaultConfig {
         applicationId = "id.my.agungdh.dawudtracker"
         minSdk = 29
+        //noinspection OldTargetApi
         targetSdk = 36
         versionCode = 1
         versionName = "0.0.1"
